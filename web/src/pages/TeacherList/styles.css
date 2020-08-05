@@ -1,0 +1,138 @@
+#page-teacher-list{
+    width: 100vw;
+    height: 100vh;
+}
+
+#search-teachers{
+    margin-top: 3.2rem;
+}
+
+#search-teachers label {
+    color:var(--color-primary);
+}
+
+#search-teachers .input-block {
+    position: relative;
+    margin: 30px auto;
+}
+
+#search-teachers .input-block + .input-block{
+    margin-top: 1.4rem;
+}
+
+#search-teachers .input-block label{
+    position: absolute;
+    font-size:700 1.4rem Archivo;
+    top:50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    left:20px;
+    transition: color 0.2s, transform 0.2s, font-weight  0.4s;
+    transition-timing-function: ease-in-out;
+    cursor: auto;
+}
+
+#search-teachers .input-block input {
+    width: 100%;
+    z-index: 0;
+    outline: 0;
+    color:var(--color-primary);
+    border: none;
+    height: 5.6rem;
+    border-radius: 0.5rem;
+    background: var(--color-input-background);
+    padding: 0 1.6rem;
+    font:1.6rem Archivo;
+}
+
+#search-teachers .input-block input:focus + label{
+
+    transform: translateY(-60px);
+    color:white;
+    font-weight: bold;
+    font-size:1rem,
+
+}
+
+#search-teachers .input-block:focus-within::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(173, 68, 243));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    animation: after-frame forwards 400ms;
+}
+
+#search-teachers .input-block::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(208, 157, 241));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    animation: before-frame 400ms;
+}
+
+@keyframes after-frame {
+    0%{
+        width: 0;
+    }
+    100%{
+        width: calc(100% - 1.5rem);
+    }
+}
+
+@keyframes before-frame {
+    0%{
+        width: calc(100% - 1.5rem);
+    }
+    100%{
+        width: 0;
+    }
+}
+
+#page-teacher-list main {
+    margin: 3.2rem auto;
+    width: 90%;
+}
+
+
+@media (min-width: 700px){
+    #page-teacher-list {
+        max-width: 100%;
+    }
+
+    #search-teachers {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 16px;
+        position: absolute;
+        bottom: -60px;
+    }
+
+    #search-teachers .input-block + .input-block{
+        margin-top: 0;
+    }
+
+    #search-teachers .input-block input {
+        margin-top:0;
+    }
+
+    #search-teachers .input-block {
+        position: relative;
+        margin: 0;
+    }
+    
+    #page-teacher-list main {
+        padding: 32px;
+        max-width: 740px;
+    }
+}
+
+
+
+
+
