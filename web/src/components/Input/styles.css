@@ -1,0 +1,95 @@
+.input-block {
+    position: relative;
+    margin: 60px auto;
+    width:100%;
+}
+
+.input-block input {
+    width: 100%;
+    z-index: 0;
+    outline: 0;
+    color:var(--color-primary);
+    border: none;
+    height: 5.6rem;
+    border-radius: 0.5rem;
+    background: var(--color-input-background);
+    padding: 0 1.6rem;
+    font:1.6rem Archivo;
+}
+
+.input-block input[aria-expanded="false"] + label{
+    position: absolute;
+    font-size:700 1.4rem Archivo;
+    top:50%;
+    transform: translateY(-50%);
+    left:16px;
+    transition: color 0.2s, transform 0.2s,font-size 0.2s ,font-weight  0.4s;
+    transition-timing-function: ease-out;
+    cursor: auto;
+}
+
+.input-block input[aria-expanded="true"] + label{
+    top:50%;
+    transform: translateY(-50%);
+    left:16px;
+    position: absolute;
+    transform: translateY(-60px);
+    font-size:1.3rem;
+    font-weight: bold;
+}
+
+.input-block input:focus + label{
+
+    transform: translateY(-60px);
+    font-size:1.3rem;
+    font-weight: bold;
+}
+
+.input-block:focus-within::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(173, 68, 243));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    animation: after-frame forwards ease-in-out 350ms;
+}
+
+.input-block::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(208, 157, 241));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    animation: before-frame ease-in-out 400ms;
+}
+
+@keyframes after-frame {
+    0%{
+        width: 0;
+    }
+    100%{
+        width: calc(100% - 1.5rem);
+    }
+}
+
+@keyframes before-frame {
+    0%{
+        width: calc(100% - 1.5rem);
+    }
+    100%{
+        width: 0;
+    }
+}
+
+.input-block input:focus + label{
+
+    transform: translateY(-60px);
+    color:white !important;
+    font-weight: bold;
+    font-size:1rem,
+
+}

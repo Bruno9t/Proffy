@@ -1,41 +1,70 @@
-import React from 'react'
+import React, { memo } from 'react'
 
 // icons
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg'
+import api from '../../services/api'
 
 // styles
 import './styles.css'
 
-const TeacherItem = () => {
+
+export interface TeacherShape {
+    avatar: string
+    bio: string
+    id:number
+    cost: number
+    name: string
+    user_id:number
+    subject: string
+    whatsapp: string
+}
+
+interface Props {
+    teacher:TeacherShape
+}
+
+
+const TeacherItem:React.FC<Props> = ({
+    teacher:{name,subject,avatar,whatsapp,user_id,cost,bio},
+    ...rest}) => {
+
+        function createNewConnection(){
+            api.post('connections',{
+                user_id,
+            })
+        }
+
     return (
         <article className="teacher-item">
                     <header>
-                        <img src="https://avatars3.githubusercontent.com/u/54510870?s=460&u=3955020f2c9100560f9aea28a7b7a318384cf938&v=4" alt="Imagem do proffy"/>
+                        <img src={avatar} alt="Imagem do proffy"/>
                         <div>
-                            <strong>Bruno Medeiros</strong>
-                            <span>Matemática</span>
+                            <strong>{name}</strong>
+                            <span>{subject}</span>
                         </div>
                     </header>
 
                     <p>
-                        Grande matemático, premiado com a medalha fields 6 vezes.
+                        {bio}
+                        {/* Grande matemático, premiado com a medalha fields 6 vezes.
                         <br/><br/>
-                        Especialista em Teoria dos Grafos e Topologia.
+                        Especialista em Teoria dos Grafos e Topologia. */}
                     </p>
 
                     <footer>
                         <div>
-                            <strong>R$ 100,00&nbsp;<span>/hora</span></strong>
+                        <strong>R$ {cost}&nbsp;<span>/hora</span></strong>
                         </div>
                         <div>
-                        <button type='button'>
+                        <a target="_blank" 
+                        onClick={createNewConnection} href={`https://wa.me/${whatsapp}`}>
                             <img src={whatsappIcon} alt="Whatsapp"/>
                             Entrar em contato
-                        </button>
+                        </a>
                         </div>
                     </footer>
                 </article>
     )
 }
 
-export default TeacherItem
+export default memo(TeacherItem)

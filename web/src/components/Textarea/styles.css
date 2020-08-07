@@ -1,0 +1,92 @@
+.textarea-block {
+    position: relative;
+    margin: 60px auto;
+}
+
+.textarea-block textarea {
+    width: 100%;
+    outline: 0;
+    color:var(--color-primary);
+    border: none;
+    border-radius: 0.5rem;
+    background: var(--color-input-background);
+    padding: 2rem;
+    min-height: 200px;
+    resize: none;
+    font:1.6rem Archivo;
+}
+
+.textarea-block textarea[aria-checked="false"] + label{
+    position: absolute;
+    top:1.5rem;
+    left:16px;
+    transition: color 0.2s, transform 0.2s,font-size 0.2s ,font-weight  0.4s;
+    transition-timing-function: ease-out;
+    cursor: auto;
+    font:700 1.4rem;
+}
+
+.textarea-block textarea[aria-checked="true"] + label{
+    position: absolute;
+    top:1.5rem;
+    left:16px;
+    transform: translateY(-50px);
+    font-size:1.3rem;
+    font-weight: bold;
+}
+
+.textarea-block textarea:focus + label{
+
+    transform: translateY(-50px);
+    font-size:1.3rem;
+    font-weight: bold;
+}
+
+.textarea-block:focus-within::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(173, 68, 243));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 7px;
+    animation: after-frame forwards ease-in-out 350ms;
+}
+
+.textarea-block::after{
+    height: 2px;
+    content: "";
+    background: radial-gradient(var(--color-primary-light),rgb(208, 157, 241));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 7px;
+    animation: before-frame ease-in-out 400ms;
+}
+
+@keyframes after-frame {
+    0%{
+        width: 0;
+    }
+    100%{
+        width: calc(100% - 1.5rem);
+    }
+}
+
+@keyframes before-frame {
+    0%{
+        width: calc(100% - 1.5rem);
+    }
+    100%{
+        width: 0;
+    }
+}
+
+.textarea-block input:focus + label{
+
+    transform: translateY(-60px);
+    color:white !important;
+    font-weight: bold;
+    font-size:1rem,
+
+}
