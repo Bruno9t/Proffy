@@ -5,8 +5,8 @@ import { json } from 'express'
 import cors from 'cors'
 
 // routes
-import classes from './routes/class'
-import connections from './routes/connection'
+import classes from './routes/classes'
+import connections from './routes/connections'
 
 const SERVER_PORT = 3333
 

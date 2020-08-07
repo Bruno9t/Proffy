@@ -3,13 +3,13 @@ import express = require("express")
 import {Application,Router} from 'express'
 
 interface AppConfigShape {
-    middlewares?:any[] | undefined
-    routes?:Router[] | undefined
+    middlewares?:any[]
+    routes?:Router[]
 }
 
 interface AppShape {
     app:Application;
-    listen(portNumber:number,feedBack?:() => void | undefined):void;
+    listen(portNumber:number,feedBack?:() => void):void;
 }
 
 class App implements AppShape {
@@ -44,7 +44,7 @@ class App implements AppShape {
         })
     }
 
-    public listen(portNumber:number,feedBack?:()=>void | undefined){
+    public listen(portNumber:number,feedBack?:()=>void){
         this.app.listen(portNumber,feedBack)
     }
 }
