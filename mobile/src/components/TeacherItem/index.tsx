@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, View,Image } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View,Image,Linking, AsyncStorage } from 'react-native'
 import { RectButton } from 'react-native-gesture-handler'
 
 
@@ -11,26 +11,76 @@ import whatsappIcon from '../../assets/images/icons/whatsapp.png'
 
 import styles from './styles'
 
-interface TeacherItemProps {
+export interface TeacherItemProps {
+    avatar: string
+    bio: string
+    id:number
+    cost: number
+    name: string
+    user_id:number
+    subject: string
+    whatsapp: string
+}
 
+interface TeacherProps {
+    teacher:TeacherItemProps
+    favorited:boolean
 }
 
 
-const TeacherItem:React.FC<TeacherItemProps> = ({}) => {
+const TeacherItem:React.FC<TeacherProps> = ({
+    teacher,
+    favorited
+}) => {
+
+    const [isFavorited,setIsFavorited] = useState(favorited)
+
+    function handleLinkToWhatsapp(){
+        Linking.openURL(`whatsapp://send?phone=${teacher.whatsapp}`)
+    }
+
+    async function handleToggleFavorite(){
+        const favorites = await AsyncStorage.getItem('favorites')
+
+        let favoritesArray = []
+
+            if(favorites){
+                favoritesArray = JSON.parse(favorites)
+            }
+
+        if(isFavorited){
+            const favoriteIndex = favoritesArray.findIndex((teacherItem:TeacherItemProps)=>{
+                return teacherItem.id === teacher.id
+            })
+
+
+            favoritesArray.splice(favoriteIndex,1)
+
+            setIsFavorited(false)
+        }else{
+
+            favoritesArray.push(teacher)
+
+            setIsFavorited(true)
+        }
+
+        await AsyncStorage.setItem('favorites',JSON.stringify(favoritesArray))
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.profile}>
                 <Image 
                 style={styles.avatar}
-                source={{uri:"https://images.unsplash.com/photo-1596718802962-2b4225d41955?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"  }} />
+                source={{uri: teacher.avatar }} />
 
             <View style={styles.profileInfo}>
-                <Text style={styles.name} >Bruno</Text>
-                <Text style={styles.subject} >Matemática</Text>
+            <Text style={styles.name} >{teacher.name}</Text>
+            <Text style={styles.subject} >{teacher.subject}</Text>
             </View>
             </View>
             <Text style={styles.bio} >
-            Nem sempre um usuário vai se lembrar da sua senha 
+                {teacher.bio}
             </Text>
 
             <View style={styles.footer}>
@@ -38,17 +88,25 @@ const TeacherItem:React.FC<TeacherItemProps> = ({}) => {
                 <Text style={styles.price}>
                     Preço/hora {'   '}
                     <Text style={styles.priceValue}>
-                        R$ 200,00
+                        R$ {teacher.cost}
                     </Text> 
                 </Text>
 
                 <View style={styles.buttonsContainer}>
-                    <RectButton style={[styles.favoriteButton,
-                    styles.favorited
+                    <RectButton onPress={handleToggleFavorite} 
+                    style={[styles.favoriteButton,
+                    isFavorited ? styles.favorited : {}
                     ]}>
-                            <Image source={heartOutlineIcon}/>
+
+                            {
+                                isFavorited ? (
+                                    <Image source={heartOutlineIcon}/>
+                                ):(
+                                    <Image source={unfavoriteIcon}/>
+                                )
+                            } 
                     </RectButton>
-                    <RectButton style={styles.contactButton}>
+                    <RectButton onPress={handleLinkToWhatsapp} style={styles.contactButton}>
                             <Image source={whatsappIcon}/>
 
                             <Text style={styles.contactButtonText} >Entrar em contato</Text>
